@@ -1,11 +1,11 @@
 import React from 'react'
-import { useGlobalContext } from '../useQuiz'
 import { useNavigate } from 'react-router-dom'
-import { useFetchQuestions } from '../useFetchQuestions'
 import { SocialMedia } from '../components/SocialMedia'
+import { useSelector } from 'react-redux'
 
 export const FinishedScreen = () => {
-    const {points, highscore, gameMode} = useGlobalContext()
+    const {points, highscore} = useSelector(store => store.questions)
+    const {gameMode} = useSelector(store => store.difficulty)
     const percentage = Math.ceil(points*100/300)
     const navigate = useNavigate()
     

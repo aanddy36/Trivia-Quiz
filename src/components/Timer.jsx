@@ -1,25 +1,32 @@
 import React, { useEffect } from 'react'
-import { useGlobalContext } from '../useQuiz'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { lessSeconds, restartTimer } from '../features/timer/timerSlice'
+import { gameEnded } from '../features/questions/questionsSlice'
 
 export const Timer = () => {
-    const {lessSeconds, secondsRemaining, gameFinished, gameMode, questions} = useGlobalContext()
-    const navigate = useNavigate()
+    const {secondsRemaining} = useSelector(store => store.timer)
     const mins = Math.floor(secondsRemaining/60)
     const sec = secondsRemaining % 60
+    
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     useEffect(()=>{
         if(secondsRemaining === 0){
-            console.log(`Game mode: ${gameMode}`);
-            gameFinished()
+            dispatch(gameEnded())
+            dispatch(restartTimer())
             navigate('/results')
         }
     },[secondsRemaining])
+
     useEffect(()=>{
         const timer = setInterval(()=>{
-            lessSeconds()
+            dispatch(lessSeconds())
         }, 1000)
         return ()=>clearInterval(timer)
     },[])
+    
   return (
     <div className='timer'>{mins < 10 && "0"}{mins}:{sec < 10 && "0"}{sec}</div>
   )

@@ -1,15 +1,19 @@
 import React from 'react'
-import { useGlobalContext } from '../useQuiz'
 import { useNavigate } from 'react-router-dom'
 import { SocialMedia } from './SocialMedia'
+import { selectGameMode } from '../features/difficulty/difficultySlice'
+import { useDispatch } from 'react-redux'
 
 export const StartScreen = () => {
-  const {selectGameMode} = useGlobalContext()
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const handleClick = (e)=>{
-        selectGameMode(e.target.value)
+        dispatch(selectGameMode(e.target.value))
         navigate(`/quiz/${e.target.value}`)
       }
+      
   return (
     <div className='start-screen'>
         <h2>Welcome to The Trivia Quiz!</h2>

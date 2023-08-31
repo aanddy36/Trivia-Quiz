@@ -1,6 +1,4 @@
-import { useEffect, useReducer, useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css'
 import { Header } from './components/Header'
 import { Main } from './pages/Main'
 import { Question } from './pages/Question'

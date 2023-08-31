@@ -1,8 +1,9 @@
 import React from 'react'
-import { useGlobalContext } from '../useQuiz'
+import { useSelector } from 'react-redux'
 
 export const Progress = () => {
-    const {index, points, answer} = useGlobalContext()
+    const {index, points, answer} = useSelector(store => store.questions)
+    
   return (
     <header className='progress'>
         <progress max='15' value={index + Number(answer !== null)}/>

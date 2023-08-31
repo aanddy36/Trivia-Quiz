@@ -1,17 +1,25 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useGlobalContext } from '../useQuiz'
 import { Loader } from '../components/Loader'
 import { ErrorMessage } from '../components/ErrorMessage'
-import { useFetchQuestions } from '../useFetchQuestions'
 import { Progress } from '../components/Progress'
 import { Next } from '../components/Next'
 import { Timer } from '../components/Timer'
+import { useDispatch, useSelector } from 'react-redux'
+import { restartTimer } from '../features/timer/timerSlice'
+import { getQuestions, newAnswer } from '../features/questions/questionsSlice'
 
 export const Question = () => {
     const {difficulty} = useParams()
-    const {gameMode, status, newAnswer, answer, currentQuestion, index} = useGlobalContext()
-    useFetchQuestions(gameMode)
+    const {gameMode} = useSelector(store => store.difficulty)
+    const {status, index, currentQuestion, answer} = useSelector(store => store.questions)
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+      dispatch(restartTimer())
+      dispatch(getQuestions(gameMode))
+    },[])
+
     useEffect(()=>{
       window.scrollTo(0, 0);
     },[index])
@@ -39,7 +47,7 @@ export const Question = () => {
             ${hasAnswered ? currentQuestion.correctAnswer === option
             ? "correct" : "" : ""}`} 
             disabled={hasAnswered}
-            onClick={()=>newAnswer(option)}>{option}</button>
+            onClick={()=>dispatch(newAnswer(option))}>{option}</button>
           })}
         </div>
       </div> 

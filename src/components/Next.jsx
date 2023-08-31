@@ -1,17 +1,23 @@
 import React from 'react'
-import { useGlobalContext } from '../useQuiz'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { gameEnded, nextQuestion } from '../features/questions/questionsSlice'
 
 export const Next = () => {
-    const {nextQuestion, index, gameFinished} = useGlobalContext()
+    const {index} = useSelector(store => store.questions)
+
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const handleFinish = ()=>{
-        gameFinished()
+        dispatch(gameEnded())
         navigate('/results')
     }
+
   if(index < 14) return (
-    <button className='btn btn-ui' onClick={nextQuestion}>Next</button>
+    <button className='btn btn-ui' onClick={()=>dispatch(nextQuestion())}>Next</button>
   )
+  
   return (
     <button className='btn btn-ui' onClick={handleFinish}>Finish</button>
   )
