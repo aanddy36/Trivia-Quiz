@@ -16,11 +16,12 @@ Then you can go back to the main menu or reset the trivia with the same difficul
 ## Technologies used
 - React
 - React Router
+- Redux Toolkit
 - JavaScript
 - CSS
 
 ## Concepts Applied
--   _**Global State Management**_  using useReducer() + Context API
+-   _**Global State Management**_  using Redux Toolkit
 - ***Routing*** with React Router library
 - ***Data fetching*** from external API
 - ***Custom Hook*** for data fetching
